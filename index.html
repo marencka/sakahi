@@ -1,12 +1,117 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Sakahi</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
 
-  <body>
-    <h1>Sakahi - COMP 426 Final</h1>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sakahi</title>
+</head>
+
+
+<body>
+  <div id="loginScreen">
+    <h3>Login Page</h3>
+    <input type="email" placeholder="type your email" id="email">
+    <input type="password" placeholder="type your password" id="password">
+    <br>
+    <button id="loginBtn">Login</button>
+    <button id="signupBtn">Sign Up</button>
+  </div>
+
+  <div id="dashboard">
+    <div id="userDetails"></div>
+
+    <h2>Hey there, Tarheel! Welcome.</h2>
+    <h3>Here you will find everything you need to start your day.</h3>
+
+    <h5>Current weather in Chapel Hill</h5>
+
+    <h5>Play a quick game to destress!</h5>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCaN3gUujQF9nYZWeQlOadTDq7SzkSvPuU",
+      authDomain: "sakahi.firebaseapp.com",
+      databaseURL: "https://sakahi-default-rtdb.firebaseio.com",
+      projectId: "sakahi",
+      storageBucket: "sakahi.appspot.com",
+      messagingSenderId: "421717937827",
+      appId: "1:421717937827:web:3bb65868a57e37b5283916"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    document.getElementById('loginBtn').addEventListener('click', loginUser);
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('signupBtn').addEventListener('click', signUp);
+
+    document.getElementById('loginScreen').style.display = 'block';
+    document.getElementById('dashboard').style.display = 'none';
+
+    function loginUser() {
+      let email = document.getElementById('email').value;
+      let password = document.getElementById('password').value;
+
+      firebase.auth().signInWithEmailAndPassword(email, password).catch(e => {
+        console.log(e);
+      })
+    }
+
+    function signUp() {
+      let email = document.getElementById('email').value;
+      let password = document.getElementById('password').value;
+
+      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+      });
+    }
+
+    function showUserDetails(user) {
+      document.getElementById('userDetails').innerHTML = `
+      <p>Logged in successfully with ${user.email}</p>
+      `
+    }
+
+    function logout() {
+      firebase.auth().signOut().then(() => {
+        document.getElementById('loginScreen').style.display = 'block';
+        document.getElementById('dashboard').style.display = 'none';
+      }).catch(e => {
+        console.log(e);
+      })
+    }
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(user)
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        showUserDetails(user);
+      } else {
+        document.getElementById('loginScreen').style.display = 'block';
+        document.getElementById('dashboard').style.display = 'none';
+      }
+    })
+
+  </script>
+
+
+
+</body>
+
 </html>
