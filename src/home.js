@@ -49,8 +49,8 @@ function logout() {
  function drawWeather(data) {
    let temperature = data.main.temp; 
    document.getElementById('weather-conditions').innerHTML = "The weather is currently described as: " + data.weather[0].description; 
-   document.getElementById('weather-temperature').innerHTML = "The temperature is currently " + temperature + '&deg;F'; 
-   document.getElementById('weather-humidity').innerHTML = "The humidity is " + data.main.humidity + "%"; 
+   document.getElementById('weather-temperature').innerHTML = "The temperature is " + temperature + '&deg;F'; 
+   document.getElementById('weather-humidity').innerHTML = "Humidity is " + data.main.humidity + "%"; 
  }
  
  
@@ -88,8 +88,8 @@ function logout() {
    fetch('https://api.quotable.io/random')
    .then(response => response.json()) 
    .then(data => {
-     document.getElementById('quoteMessage').innerHTML = `${data.content}
-     -${data.author}`; 
+     document.getElementById('quoteMessage').innerHTML = `${data.content}    
+     - ${data.author}`; 
    })
  }
 
@@ -99,92 +99,91 @@ function logout() {
  /**
   * GAME
   */
-  const X_CLASS = 'x'
-  const CIRCLE_CLASS = 'circle'
-  const WINNING_COMBINATIONS = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ]
-  const cellElements = document.querySelectorAll('[data-cell]')
-  const board = document.getElementById('board')
-  const winningMessageElement = document.getElementById('winningMessage')
-  const restartButton = document.getElementById('restartButton')
-  const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
-  let circleTurn
+  const statusDisplay = document.querySelector('.game--status');
+
+  let gameActive = true;
+  let currentPlayer = "X";
+  let gameState = ["", "", "", "", "", "", "", "", ""];
   
-  startGame()
+  const winningMessage = () => `Player ${currentPlayer} has won!`;
+  const drawMessage = () => `It's a draw!`;
+  const currentPlayerTurn = () => `It's ${currentPlayer}'s turn`;
   
-  restartButton.addEventListener('click', startGame)
+  statusDisplay.innerHTML = currentPlayerTurn();
   
-  function startGame() {
-    circleTurn = false
-    cellElements.forEach(cell => {
-      cell.classList.remove(X_CLASS)
-      cell.classList.remove(CIRCLE_CLASS)
-      cell.removeEventListener('click', handleClick)
-      cell.addEventListener('click', handleClick, { once: true })
-    })
-    setBoardHoverClass()
-    winningMessageElement.classList.remove('show')
+  const winningConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+  ];
+  
+  function handleCellPlayed(clickedCell, clickedCellIndex) {
+      gameState[clickedCellIndex] = currentPlayer;
+      clickedCell.innerHTML = currentPlayer;
   }
   
-  function handleClick(e) {
-    const cell = e.target
-    const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
-    placeMark(cell, currentClass)
-    if (checkWin(currentClass)) {
-      endGame(false)
-    } else if (isDraw()) {
-      endGame(true)
-    } else {
-      swapTurns()
-      setBoardHoverClass()
-    }
+  function handlePlayerChange() {
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+      statusDisplay.innerHTML = currentPlayerTurn();
   }
   
-  function endGame(draw) {
-    if (draw) {
-      winningMessageTextElement.innerText = 'Draw!'
-    } else {
-      winningMessageTextElement.innerText = `${circleTurn ? "O's" : "X's"} Wins!`
-    }
-    winningMessageElement.classList.add('show')
+  function handleResultValidation() {
+      let roundWon = false;
+      for (let i = 0; i <= 7; i++) {
+          const winCondition = winningConditions[i];
+          let a = gameState[winCondition[0]];
+          let b = gameState[winCondition[1]];
+          let c = gameState[winCondition[2]];
+          if (a === '' || b === '' || c === '') {
+              continue;
+          }
+          if (a === b && b === c) {
+              roundWon = true;
+              break
+          }
+      }
+  
+      if (roundWon) {
+          statusDisplay.innerHTML = winningMessage();
+          gameActive = false;
+          return;
+      }
+  
+      let roundDraw = !gameState.includes("");
+      if (roundDraw) {
+          statusDisplay.innerHTML = drawMessage();
+          gameActive = false;
+          return;
+      }
+  
+      handlePlayerChange();
   }
   
-  function isDraw() {
-    return [...cellElements].every(cell => {
-      return cell.classList.contains(X_CLASS) || cell.classList.contains(CIRCLE_CLASS)
-    })
+  function handleCellClick(clickedCellEvent) {
+      const clickedCell = clickedCellEvent.target;
+      const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
+  
+      if (gameState[clickedCellIndex] !== "" || !gameActive) {
+          return;
+      }
+  
+      handleCellPlayed(clickedCell, clickedCellIndex);
+      handleResultValidation();
   }
   
-  function placeMark(cell, currentClass) {
-    cell.classList.add(currentClass)
+  function handleRestartGame() {
+      gameActive = true;
+      currentPlayer = "X";
+      gameState = ["", "", "", "", "", "", "", "", ""];
+      statusDisplay.innerHTML = currentPlayerTurn();
+      document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = "");
   }
   
-  function swapTurns() {
-    circleTurn = !circleTurn
-  }
   
-  function setBoardHoverClass() {
-    board.classList.remove(X_CLASS)
-    board.classList.remove(CIRCLE_CLASS)
-    if (circleTurn) {
-      board.classList.add(CIRCLE_CLASS)
-    } else {
-      board.classList.add(X_CLASS)
-    }
-  }
-  
-  function checkWin(currentClass) {
-    return WINNING_COMBINATIONS.some(combination => {
-      return combination.every(index => {
-        return cellElements[index].classList.contains(currentClass)
-      })
-    })
-  }
+  document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', handleCellClick));
+  document.querySelector('.game--restart').addEventListener('click', handleRestartGame);

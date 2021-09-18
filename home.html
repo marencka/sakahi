@@ -12,54 +12,58 @@
      </header>
 
      <div id="blueband">
+       <a href="home.html"><button id='navbtn'>Home</button></a>
+       <a href="https://comp426.com/home"><button id='navbtn'>COMP 426</button></a>
+       <a href="https://carolinatogether.unc.edu/dashboard/"><button id='navbtn'>COVID-19 Dashboard</button></a>
+       <a href="https://connectcarolina.unc.edu/"><button id='navbtn'>Connect Carolina</button></a>
+       <button id="logoutBtn">Logout</button> 
      </div>
+   
+     <br> 
+     <br>
+     <br>
 
-    <h2>Hey there, Tarheel!</h2>
-    <h3>Here you will find everything you need to start your day.</h3>
-
+    <div id='wrapper'>
     <div id="weather">
-      <h5>Current weather in Chapel Hill</h5>
+      <img id="weather-top" src="src/weather-icon-png-11063.png" alt="weather icons" height=80px width=80px>
+      <h5 id="weather-top">Chapel Hill</h5>
       <p id="weather-conditions"></p>
       <p id="weather-temperature"></p>
       <p id="weather-humidity"></p>
     </div>
 
     <div id="news">
-      <h5>Current top news stories</h5>
-      <a id="news0Link"><p id="news0"></p></a>
-      <a id="news1Link"><p id="news1"></p></a>
-      <a id="news2Link"><p id="news2"></p></a>
+      <img id="news-top" src="src/news.png" alt="news icon" height=80px width=80px>
+      <h5 id="news-top">Current top news stories</h5>
+      <a id="news0Link"><p id="news0">•</p></a>
+      <a id="news1Link"><p id="news1">•</p></a>
+      <a id="news2Link"><p id="news2">•</p></a>
     </div>
 
 
     <div id="quotes">
-      <h5>A quote to motivate you throughout your day.</h5>
+      <h5 id=>A quote to motivate you throughout your day.</h5>
       <p id="quoteMessage"></p>
     </div>
 
-
-
-    
-    <div class="board" id="board">
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
     </div>
-    <div class="winning-message" id="winningMessage">
-      <div data-winning-message-text></div>
-      <button id="restartButton">Restart</button>
+  </div>
+
+
+    <div id="divider"></div>
+    <div class="game--container">
+      <div data-cell-index="0" class="cell"></div>
+      <div data-cell-index="1" class="cell"></div>
+      <div data-cell-index="2" class="cell"></div>
+      <div data-cell-index="3" class="cell"></div>
+      <div data-cell-index="4" class="cell"></div>
+      <div data-cell-index="5" class="cell"></div>
+      <div data-cell-index="6" class="cell"></div>
+      <div data-cell-index="7" class="cell"></div>
+      <div data-cell-index="8" class="cell"></div>
     </div>
-
-  
-
-
-    </div>
+    <h2 class='game--status'></h2>
+    <button class='game--restart'>Restart Game</button>
 
 
 
@@ -74,8 +78,7 @@
 
 
 
-
-   <button id="logoutBtn">Logout</button>
+   
   
 
 
