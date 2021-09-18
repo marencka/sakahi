@@ -5,58 +5,58 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sakahi</title>
-  <link href="stylesheet.css" rel="stylesheet">
+  <link href="src/loginStyle.css" rel="stylesheet">
 </head>
 
 
 <body>
 
   <header>
+    <img id="headerLogo" src="src/logo.png" alt="Logo of UNC-Chapel Hill">
+    <h1>Single Sign-On</h1>
   </header>
-  <h1>Welcome to Sakahi!</h1>
-  <div class="container">
-    <div id="loginScreen">
-    <h3>Login Page</h3>
-    <h6>Don't have a login? Enter in your email and password and hit sign up.</h6>
-    <div id="loginContainer">
-    <input type="email" placeholder="type your email" id="email">
-    <input type="password" placeholder="type your password" id="password">
-    <br>
-    <button id="loginBtn">Login</button>
-    <button id="signupBtn">Sign Up</button>
-    </div>
-  </div>
-  </div>
 
-  <div id="dashboard" onload="weatherBalloon()">
-    <div id="userDetails"></div>
+  <div class="wrapper">
+    <div class="container">
+      <div class="content">
+        <label id="forums" for="username">Onyen -or- UNC Guest ID</label>
+        <input type="email" id="email">
+        <label id="forums" for="password">Password</label>
+        <input type="password" id="password">
+        <button id="loginBtn">Sign in</button>
+        <button id="signupBtn">Sign up</button>
 
-    <h2>Hey there, Tarheel!</h2>
-    <h3>Here you will find everything you need to start your day.</h3>
 
-    <div id="weather">
-      <h5>Current weather in Chapel Hill</h5>
-      <p id="weather-conditions"></p>
-      <p id="weather-temperature"></p>
-      <p id="weather-humidity"></p>
-    </div>
-
-    <div id="news">
-      <h5>Here are some top news stories</h5>
-      <a id="news-link-1"><p id="news-1"><a id="news-1-link"></p></a>
-      <p id="news-2"></p>
-      <p id="news-3"></p>
+        <div class="loginHelp">
+          <p>
+            Reset password for <a href="https://account.itsapps.unc.edu/onyen/reset-password">Onyen</a>
+            |
+            <a href="https://account.itsapps.unc.edu/guestid/reset-password">UNC Guest ID</a>
+            or get
+            <a href="http://help.unc.edu/">help</a>.
+          </p>
+          <p class="reminder">
+            <em>Important</em>
+            To protect your personal information, you must close every instance of this browser that is open on your
+            computer when you log out.
+          </p>
+        </div>
+      </div>
     </div>
 
-    <h5>Play a quick game to destress!</h5>
-    <button id="logoutBtn">Logout</button>
+
+    <footer>
+      <div class="footer">
+        <p class="footer-text">Ⓒ 2021 Alexis Danz. All rights reserved.</p>
+      </div>
+    </footer>
   </div>
+
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
   <script src="src/index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 </body>
 
 </html>

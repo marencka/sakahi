@@ -1,0 +1,99 @@
+/*
+  Color Palette variables
+*/ 
+:root {
+  --carolinablue: #56a0d3; 
+  --background: #FCFCFC; 
+  --important: #FF895E; 
+}
+
+html { 
+  font-size: 62.5%; 
+  font-family: Verdana, Arial, sans-serif; 
+}
+
+
+h1 { 
+  text-align: center;
+}
+
+#headerLogo {
+  display: block;
+  margin: 0 auto; 
+  width: 30rem; 
+  background: center no-repeat; 
+  display: block; 
+  height: 10rem;
+}
+
+body { 
+  font-size: 1.0em; 
+  background-color: var(--background); 
+}
+
+footer { 
+  margin-top: 2.5rem; 
+  width: 100%;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+h1 {
+  color: var(--carolinablue); 
+}
+
+label { 
+  display: block; 
+  font-size: 1.3rem; 
+  margin-bottom: 0.5rem;
+}
+
+.wrapper { 
+  position: relative; 
+  margin: 0 auto;
+  width: 30rem;
+}
+
+.container {
+  position: relative; 
+  margin: 0 auto; 
+  font-size: 1.6rem; 
+  background: var(--background); 
+  padding: 1.5em; 
+  border: 1px solid var(--carolinablue); 
+  border-radius: 1rem;
+}
+
+.container input { 
+  width: 95%; 
+  height: 2rem; 
+  margin: 0 auto 1rem auto; 
+  border: dotted #56a0d3; 
+  border-width: 1px;
+}
+
+.loginHelp { 
+  font-size: 1.3rem; 
+}
+
+.reminder em {
+  background: var(--important); 
+  color: white; 
+  padding: 0 5px; 
+  font-weight: bold; 
+}
+
+button { 
+  margin: 1rem 0; 
+  width: 98%; 
+  display: block; 
+  font-size: 2rem; 
+  height: 3rem; 
+  border: 1px solid --carolinablue; 
+  background: var(--carolinablue); 
+  color: white; 
+  text-decoration: none; 
+  text-align: center; 
+}
+
+
